@@ -3,6 +3,16 @@ const preloaderWaitindTime = 1200;
 const cardsOnPage = 5;
 const BASE_URL = "https://v-content.practicum-team.ru";
 const endpoint = `${BASE_URL}/api/videos?pagination[pageSize]=${cardsOnPage}&`;
+const LOG_PREFIX = "[LookOut]";
+
+const logInfo = (message) => console.info(`${LOG_PREFIX} ${message}`);
+const logError = (message, error) => {
+  if (error) {
+    console.error(`${LOG_PREFIX} ${message}`, error);
+  } else {
+    console.error(`${LOG_PREFIX} ${message}`);
+  }
+};
 
 /* ЭЛЕМЕНТЫ СТРАНИЦЫ */
 const cardsContainer = document.querySelector(".content__list");
@@ -93,7 +103,7 @@ async function mainMechanics(endpoint) {
     } else {
       showError(videoContainer, videoNotFoundTmp, "Ошибка получения данных :(");
     }
-    console.log(err);
+    logError("Failed to load videos", err);
     removePreloader(videoContainer, ".preloader");
     removePreloader(cardsContainer, ".preloader");
   }
@@ -121,7 +131,7 @@ async function waitForReadyVideo(video) {
 function showPreloader(tmp, parent) {
   const node = tmp.content.cloneNode(true);
   parent.append(node);
-  console.log("показал прелоадер");
+  logInfo("Preloader displayed");
 }
 
 // Убирает прелоадер из DOM ✅
@@ -131,7 +141,7 @@ function removePreloader(parent, preloaderSelector) {
     preloader.remove();
   }
 
-  console.log("убрал прелоадер");
+  logInfo("Preloader removed");
 }
 
 // Добавляет карточки в контейнер, собирая их из данных API ✅
@@ -147,14 +157,14 @@ function appendCards({ baseUrl, dataArray, cardTmp, container }) {
     node.querySelector(".content__video-card-thumbnail").setAttribute("alt", el.description);
     container.append(node);
   });
-  console.log("Сгенерировал карточки");
+  logInfo("Video cards rendered");
 }
 
 // Устанавливет внужное видео в контейнер ✅
 function setVideo({ baseUrl, video, videoUrl, posterUrl }) {
   video.setAttribute("src", `${baseUrl}${videoUrl}`);
   video.setAttribute("poster", `${baseUrl}${posterUrl}`);
-  console.log("Подставил видео в основной блок");
+  logInfo("Primary video updated");
 }
 
 // получает данные из формы и сериализует как надо ✅
@@ -166,7 +176,7 @@ function serializeFormData(form) {
     item.checked && acc.push(item.value);
     return acc;
   }, []);
-  console.log("Собрал данные формы в объект");
+  logInfo("Form data serialized");
   return {
     city: city.value,
     timeArray: checkedValuesArray,
@@ -183,7 +193,7 @@ function generateFilterRequest(endpoint, city, timeArray) {
       endpoint += `filters[time_of_day][$eqi]=${timeslot}&`;
     });
   }
-  console.log("Сгенерировал строку адреса запроса в API из данных формы");
+  logInfo("Filter request built");
   return endpoint;
 }
 
@@ -215,7 +225,7 @@ function chooseCurrentVideo({
         await waitForReadyVideo(mainVideo);
         await delay(preloaderWaitindTime);
         removePreloader(videoContainer, ".preloader");
-        console.log("Переключил видео");
+        logInfo("Video switched");
       };
     });
   }
@@ -226,7 +236,7 @@ function showError(container, errorTemplate, errorMessage) {
   const node = errorTemplate.content.cloneNode(true);
   node.querySelector(".error__title").textContent = errorMessage;
   container.append(node);
-  console.log("показал, ошибку");
+  logInfo("Error message displayed");
 }
 
 // вывожу больше видео, если в пагинации больше страниц, чем показано
@@ -277,6 +287,7 @@ function showMoreCards({
         cardTmp,
       });
     } catch (err) {
+      logError("Failed to load additional videos", err);
       return err;
     }
   });
