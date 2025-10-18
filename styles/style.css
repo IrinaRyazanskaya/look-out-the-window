@@ -13,7 +13,7 @@ html {
   block-size: 100%;
   margin: auto;
   color: #fff;
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: "Fira Sans Condensed", sans-serif;
   font-size: 18px;
   background-color: #1b1919;
   display: flex;
@@ -101,10 +101,10 @@ ol {
   height: 27px;
   padding: 0;
   background-color: transparent;
-  color: rgba(255, 255, 255, .7);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 18px;
   line-height: 21.6px;
-  font-family: 'Fira Sans Condensed', Arial, sans-serif;
+  font-family: "Fira Sans Condensed", Arial, sans-serif;
   border-top: 1px solid #fff;
   border-bottom: 1px solid #fff;
   border-right: 1px solid transparent;
@@ -138,7 +138,7 @@ ol {
 }
 
 .search-form__checkbox:checked + .search-form__pseudo-checkbox::before {
-  content: '';
+  content: "";
   width: 15px;
   height: 15px;
   background-color: #fff;
@@ -164,7 +164,7 @@ ol {
   font-size: 18px;
   line-height: 21.6px;
   font-weight: bold;
-  font-family: 'Fira Sans Condensed', Arial, sans-serif;
+  font-family: "Fira Sans Condensed", Arial, sans-serif;
   height: 34px;
   cursor: pointer;
   position: relative;
@@ -207,7 +207,7 @@ ol {
   font-size: 75px;
   text-transform: uppercase;
   line-height: 70.5px;
-  font-family: 'Oswald', Arial, sans-serif;
+  font-family: "Oswald", Arial, sans-serif;
 }
 
 .content__accent {
@@ -267,7 +267,7 @@ ol {
   font-size: 30px;
   line-height: 30px;
   text-transform: uppercase;
-  font-family: 'Oswald', Arial, sans-serif;
+  font-family: "Oswald", Arial, sans-serif;
   margin: 2px 0 5px 0;
 }
 
